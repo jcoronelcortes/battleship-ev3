@@ -8,23 +8,23 @@ from datetime import datetime
 # Set the logging level to INFO to see messages from AlexaGadget
 logging.basicConfig(level=logging.INFO)
 
-def restart_vertical(tank_pair, ts1):
-    print("Restart vertical motors")
+def restart_vertical(tank_pair, tsVertical):
+    print("Restart vertical motors. Touch pressed : {}".format(tsVertical.is_pressed))
+
     tank_pair.on(left_speed=-40, right_speed=-40)
 
-    while not ts1.is_pressed:  
-        sleep(0.1)
+    tsVertical.wait_for_pressed()    
 
     tank_pair.stop()
     tank_pair.position = 0
     sleep(0.5)
 
 
-def restart_horizontal(lm, ts2):
-    print("Restart horizontal motor")
+def restart_horizontal(lm, tsHorizontal):
+    print("Restart horizontal motor. Touch pressed : {}".format(tsHorizontal.is_pressed))
     lm.on(speed=-40)
-    while not ts2.is_pressed:  
-        sleep(0.1)
+    
+    tsHorizontal.wait_for_pressed() 
 
     lm.stop()
     sleep(0.5)
@@ -38,7 +38,7 @@ def move_positon_player_attack(tank_pair, lm, row, column):
         rowPosition = rowPosition * 140 
         print("Row : {}".format(rowPosition))
         startMoveToPosition = datetime.now()
-        tank_pair.run_to_rel_pos(position_sp=rowPosition, speed_sp=400, stop_action = Motor.STOP_ACTION_BRAKE)
+        tank_pair.run_to_rel_pos(position_sp=rowPosition, speed_sp=400)
         tank_pair.wait_while(Motor.STATE_RUNNING)
         tank_pair.stop()
         totalSeconds = total_time_to_move(startMoveToPosition)
@@ -52,7 +52,7 @@ def move_positon_player_attack(tank_pair, lm, row, column):
         columnPosition = columnPosition * 280
         print("Column : {}".format(columnPosition))
         startMoveToPosition = datetime.now()
-        lm.run_to_rel_pos(position_sp=columnPosition, speed_sp=400, stop_action = Motor.STOP_ACTION_BRAKE)
+        lm.run_to_rel_pos(position_sp=columnPosition, speed_sp=400)
         lm.wait_while(Motor.STATE_RUNNING)
         lm.stop()
         totalSeconds = total_time_to_move(startMoveToPosition)
@@ -64,10 +64,10 @@ def execute_player_attack(mm, attackResult, shipDestroyed):
     
     # 1 - Push the duplo brick on the board
     print("Empujando bloque")
-    mm.run_to_rel_pos(position_sp=-350, speed_sp=400, stop_action = Motor.STOP_ACTION_BRAKE)
+    mm.run_to_rel_pos(position_sp=-350, speed_sp=400)
     mm.wait_while(Motor.STATE_RUNNING)
     
-    mm.run_to_rel_pos(position_sp=350, speed_sp=400, stop_action = Motor.STOP_ACTION_BRAKE)
+    mm.run_to_rel_pos(position_sp=350, speed_sp=400)
     mm.wait_while(Motor.STATE_RUNNING)
     
     mm.stop()

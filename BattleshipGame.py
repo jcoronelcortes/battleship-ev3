@@ -9,7 +9,7 @@ from random import randint
 from datetime import datetime
 
 from ev3dev2.motor import Motor, MoveTank, LargeMotor, MediumMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D
-from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
+from ev3dev2.sensor import INPUT_1, INPUT_4
 from ev3dev2.sensor.lego import TouchSensor
 from ev3dev2.sound import Sound
 from ev3dev2.led import Leds
@@ -34,8 +34,8 @@ class BatallaNaval(AlexaGadget):
         # Ev3dev initialization
         self.leds = Leds()
         self.sound = Sound()
-        self.tsVertical = TouchSensor(INPUT_3) 
-        self.tsHorizontal = TouchSensor(INPUT_4) 
+        self.tsVertical = TouchSensor(INPUT_4) 
+        self.tsHorizontal = TouchSensor(INPUT_1) 
         self.mm = MediumMotor(OUTPUT_B)
         self.tank_pair = MoveTank(OUTPUT_A, OUTPUT_D)
         self.tank_pair.reset()
@@ -117,6 +117,11 @@ class BatallaNaval(AlexaGadget):
 
                 print("Row : {}".format(row))
                 print("Column : {}".format(column))
+
+            elif command_type == "test_mode":
+
+                logZones = payload["logZones"]
+                print("Alexa Board information\n {}".format(logZones))
 
             elif command_type == "finish_game":   
 
