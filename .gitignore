@@ -1,0 +1,5 @@
+lib/
+certs/
+__pycache__/
+*.pyc
+.DS_Store

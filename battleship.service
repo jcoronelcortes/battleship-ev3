@@ -1,0 +1,14 @@
+[Unit]
+Description=Battleship robot (Alexa + AWS IoT)
+After=network-online.target time-sync.target
+Wants=network-online.target
+
+[Service]
+User=robot
+WorkingDirectory=/home/robot/battleship
+ExecStart=/usr/bin/python3 /home/robot/battleship/main.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
