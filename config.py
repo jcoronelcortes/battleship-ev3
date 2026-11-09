@@ -20,6 +20,9 @@ HOME_COLUMN = 8
 ROW_DEGREES = 140
 COLUMN_DEGREES = 280
 PUSH_DEGREES = 350
+# Después de empujar, el carro se queda en la casilla mostrando el resultado (luz roja o verde)
+# mientras Alexa lo anuncia; recién entonces vuelve: primero a la derecha y después baja.
+RESULT_WAIT_SECONDS = 2
 MOVE_SPEED_SP = 400
 HOME_SPEED_PERCENT = 40
 

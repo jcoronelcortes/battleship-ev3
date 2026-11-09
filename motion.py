@@ -73,6 +73,12 @@ def push_brick(hw):
     _turn(hw.pusher, config.PUSH_DEGREES, "Pull back")
 
 
+def wait_for_result():
+    """Stays on the attacked cell while Alexa announces the result, before going home."""
+    log.info("Waiting %s s on the cell for the result", config.RESULT_WAIT_SECONDS)
+    time.sleep(config.RESULT_WAIT_SECONDS)
+
+
 def _turn(motor, degrees, name, stop=True):
     """Turns a motor (or the vertical motor pair) by some degrees and waits until it finishes."""
     started = time.time()

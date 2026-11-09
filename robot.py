@@ -87,6 +87,8 @@ class BattleshipRobot(object):
             self.leds("GREEN")
         if result == SHIP_DESTROYED:
             log.info("Player sank a %s", payload.get("shipDestroyed"))
+        # Up to the row, left to the column, push; wait for the result; then right and down (go_home)
+        motion.wait_for_result()
         motion.go_home(self.hw)
         self.leds("GREEN")
 

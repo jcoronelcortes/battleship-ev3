@@ -34,6 +34,8 @@ La skill de Alexa (repo `battleship-alexa`, rama `smart-mode`) envía cada jugad
 
 La posición inicial ("casa") es la casilla **I9**.
 
+En cada ataque el robot **sube** hasta la fila, va a la **izquierda** hasta la columna, **empuja** el bloque y **espera** en la casilla con la luz del resultado (roja si fue impacto, verde si fue agua) mientras Alexa lo anuncia. Después vuelve: primero a la **derecha** y luego **baja** hasta I9. La espera se ajusta con `RESULT_WAIT_SECONDS` en `config.py`.
+
 ## Instalación en el EV3
 
 ### 1. Sistema operativo

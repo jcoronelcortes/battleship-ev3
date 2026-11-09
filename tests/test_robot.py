@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import config  # noqa: E402
 import hardware  # noqa: E402
+import motion  # noqa: E402
 from robot import BattleshipRobot  # noqa: E402
 
 
@@ -42,6 +43,27 @@ class RobotTest(unittest.TestCase):
         ])
         waits = [name for name, action, _ in self.hw.events if action == "wait_for_pressed"]
         self.assertEqual(waits, ["touch_horizontal", "touch_vertical"])
+
+    def test_attack_waits_for_the_result_before_going_home(self):
+        # Record the pauses in the same event list instead of really sleeping
+        real_sleep = motion.time.sleep
+        motion.time.sleep = lambda seconds: self.hw.events.append(("robot", "sleep", seconds))
+        try:
+            self.robot.handle_message(message("player_attack", row="2", column="4", attackResult=1))
+        finally:
+            motion.time.sleep = real_sleep
+        steps = [(name, action) for name, action, _ in self.hw.events
+                 if action in ("run_to_rel_pos", "wait_for_pressed")
+                 or (action == "sleep" and _ == config.RESULT_WAIT_SECONDS)]
+        self.assertEqual(steps, [
+            ("vertical", "run_to_rel_pos"),       # up to row C
+            ("horizontal", "run_to_rel_pos"),     # left to column 5
+            ("pusher", "run_to_rel_pos"),         # push the block
+            ("pusher", "run_to_rel_pos"),         # pull back
+            ("robot", "sleep"),                   # wait for the result on the cell
+            ("touch_horizontal", "wait_for_pressed"),  # back to the right (column 9)
+            ("touch_vertical", "wait_for_pressed"),    # then down (row I)
+        ])
 
     def test_attack_on_home_cell_i9_only_pushes(self):
         self.robot.handle_message(message("player_attack", row="8", column="8", attackResult=1))
