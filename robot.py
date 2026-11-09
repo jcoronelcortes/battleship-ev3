@@ -3,7 +3,7 @@
 Command JSON (same fields the Java skill sends):
   {"command": "player_attack", "row": "2", "column": "4", "attackResult": 3, "shipDestroyed": "NO", ...}
 
-Python 3.5 compatible (ev3dev-stretch): no f-strings.
+Compatible con Python 3.5 (ev3dev-stretch): sin f-strings.
 """
 import json
 import logging

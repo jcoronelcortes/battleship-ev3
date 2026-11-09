@@ -1,6 +1,6 @@
 """Robot movements on the board. Based on the 2019 Board.py, with timeouts so a motor never runs forever.
 
-Python 3.5 compatible (ev3dev-stretch): no f-strings.
+Compatible con Python 3.5 (ev3dev-stretch): sin f-strings.
 """
 import logging
 import time

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Battleship robot: listens to AWS IoT Core (MQTT) and moves the EV3.
+"""Robot de Batalla Naval: escucha AWS IoT Core (MQTT) y mueve el EV3.
 
-On the EV3:      python3 main.py
-On a computer:   python3 main.py --simulate      (no motors, prints the moves)
+En el EV3:           python3 main.py
+En un computador:    python3 main.py --simulate      (sin motores, muestra los movimientos)
 
-Needs the folder certs/ with robot.env, certificate.pem.crt, private.pem.key and AmazonRootCA1.pem
-(created by battleship-alexa-smart-mode/deploy/deploy.sh and copied by install.sh).
+Necesita la carpeta certs/ con robot.env, certificate.pem.crt, private.pem.key y AmazonRootCA1.pem
+(los crea deploy/deploy.sh en battleship-alexa y los copia install.sh).
 
-Python 3.5 compatible (ev3dev-stretch): no f-strings.
+Compatible con Python 3.5 (ev3dev-stretch): sin f-strings.
 """
 import argparse
 import logging
@@ -45,9 +45,9 @@ def make_client(client_id):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Battleship EV3 robot")
-    parser.add_argument("--simulate", action="store_true", help="run without EV3 hardware")
-    parser.add_argument("--certs", default=os.path.join(HERE, "certs"), help="folder with robot.env and certificates")
+    parser = argparse.ArgumentParser(description="Robot EV3 de Batalla Naval")
+    parser.add_argument("--simulate", action="store_true", help="ejecutar sin el hardware del EV3")
+    parser.add_argument("--certs", default=os.path.join(HERE, "certs"), help="carpeta con robot.env y los certificados")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")

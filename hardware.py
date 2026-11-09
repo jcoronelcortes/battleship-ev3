@@ -1,6 +1,6 @@
 """Creates the robot hardware: the real ev3dev2 devices, or a simulated robot for testing on a computer.
 
-Python 3.5 compatible (ev3dev-stretch): no f-strings.
+Compatible con Python 3.5 (ev3dev-stretch): sin f-strings.
 """
 import logging
 import time

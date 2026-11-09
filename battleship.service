@@ -1,5 +1,5 @@
 [Unit]
-Description=Battleship robot (Alexa + AWS IoT)
+Description=Robot de Batalla Naval (Alexa + AWS IoT)
 After=network-online.target time-sync.target
 Wants=network-online.target
 

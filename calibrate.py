@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Calibration after rebuilding the robot: homes both axes, then visits cells you choose.
+"""Calibración después de armar el robot: vuelve a la posición inicial y visita las casillas que elijas.
 
-    python3 calibrate.py              # visits A1, E5 and I9 (corners and center)
-    python3 calibrate.py C5 A9        # visits the cells you name
-    python3 calibrate.py --push C5    # also pushes a brick on each cell
+    python3 calibrate.py              # visita A1, E5 e I9 (esquinas y centro)
+    python3 calibrate.py C5 A9        # visita las casillas que indiques
+    python3 calibrate.py --push C5    # además empuja un bloque en cada casilla
 
-If the pusher stops before or after the cell, change ROW_DEGREES / COLUMN_DEGREES in config.py.
+Si el empujador queda antes o después de la casilla, ajusta ROW_DEGREES / COLUMN_DEGREES en config.py.
 
-Python 3.5 compatible (ev3dev-stretch): no f-strings.
+Compatible con Python 3.5 (ev3dev-stretch): sin f-strings.
 """
 import argparse
 import logging
@@ -26,9 +26,9 @@ def parse_cell(text):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Calibrate the Battleship robot")
+    parser = argparse.ArgumentParser(description="Calibrar el robot de Batalla Naval")
     parser.add_argument("cells", nargs="*", default=["A1", "E5", "I9"])
-    parser.add_argument("--push", action="store_true", help="push a brick on each cell")
+    parser.add_argument("--push", action="store_true", help="empujar un bloque en cada casilla")
     parser.add_argument("--simulate", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
@@ -37,16 +37,16 @@ def main():
     motion.go_home(hw)
     for cell in args.cells:
         row, column = parse_cell(cell)
-        print("Moving to {} ...".format(cell.upper()))
+        print("Moviendo a {} ...".format(cell.upper()))
         motion.move_to(hw, row, column)
         if args.push:
             motion.push_brick(hw)
         try:
-            input("Is the pusher over {}? Press Enter to continue ".format(cell.upper()))
+            input("El empujador quedo sobre {}? Presiona Enter para continuar ".format(cell.upper()))
         except EOFError:
             pass
         motion.go_home(hw)
-    print("Done. Adjust config.py if a cell was off.")
+    print("Listo. Ajusta config.py si alguna casilla quedo desplazada.")
 
 
 if __name__ == "__main__":
